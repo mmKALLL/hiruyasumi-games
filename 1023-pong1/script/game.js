@@ -9,7 +9,7 @@ Source code provided for reference purposes only.
 (function() {
 	var constants = {
 		FPS: 60,
-		PADDLE_LENGTH: 40,
+		PADDLE_LENGTH: 50,
 		BALL_RADIUS: 4,
 	};
 	var gameState = {};
@@ -149,6 +149,8 @@ Source code provided for reference purposes only.
 		ctx.fillStyle = "#000000";
 		ctx.fill();
 		ctx.closePath();
+		
+		ctx.fillText("Left score: " + gameState.scoreLeft + ", right score: " + gameState.scoreRight,200,10);
 	}
 	
 	function updateBallPosition() {
