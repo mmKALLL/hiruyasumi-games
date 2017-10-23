@@ -75,7 +75,7 @@ Source code provided for reference purposes only.
 		checkWallCollisions();
 		
 		// paddles
-		gameState.paddleRightY += gameState.ballDirectionY * 2.2; // AI
+		gameState.paddleRightY += gameState.ballDirectionY * 2.1; // AI
 		gameState.paddleLeftY = Math.max(constants.PADDLE_LENGTH / 2, gameState.paddleLeftY);
 		gameState.paddleLeftY = Math.min(500 - constants.PADDLE_LENGTH / 2, gameState.paddleLeftY);
 		gameState.paddleRightY = Math.max(constants.PADDLE_LENGTH / 2, gameState.paddleRightY);
