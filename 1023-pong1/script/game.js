@@ -30,6 +30,8 @@ Source code provided for reference purposes only.
 		};
 		
 		ballReset();
+		
+		// Update game status every frame
 		window.setInterval(function() {
 			update();
 		}, 1000/constants.FPS);
@@ -70,6 +72,7 @@ Source code provided for reference purposes only.
     	e.preventDefault(); // prevent the default action (scroll / move caret)
 	}
 	
+	// Game loop, called every frame
 	function update() {
 		checkPaddleCollisions();
 		checkWallCollisions();
