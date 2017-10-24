@@ -50,26 +50,26 @@ Source code provided for reference purposes only.
 	window.onkeydown = handleArrowKeys;
 	
 	function handleArrowKeys(e) {
-    	switch(e.keyCode) {
-        	case 37: // 37, left, cw
-        	break;
-
-        	case 38: // 38
-        	gameState.paddleLeftY -= 8;
-        	break;
-
-        	case 39: // 39
-        	break;
-
-        	case 40: // 40
-        	gameState.paddleLeftY += 8;
-        	break;
-
-        	default:
-        	return; // exit this handler for other keys
-        }
-    
-    	e.preventDefault(); // prevent the default action (scroll / move caret)
+		switch(e.keyCode) {
+			case 37: // 37, left, cw
+			break;
+			
+			case 38: // 38
+			gameState.paddleLeftY -= 8;
+			break;
+			
+			case 39: // 39
+			break;
+			
+			case 40: // 40
+			gameState.paddleLeftY += 8;
+			break;
+			
+			default:
+			return; // exit this handler for other keys
+		}
+		
+		e.preventDefault(); // prevent the default action (scroll / move caret)
 	}
 	
 	// Game loop, called every frame
@@ -115,24 +115,24 @@ Source code provided for reference purposes only.
 			gameState.scoreLeft += 1;
 			ballReset();
 		}
-			
+		
 	}
 	
 	function draw() {
-	
+		
 		ctx.beginPath();
 		ctx.rect(0, 0, 2000, 2000);
 		ctx.fillStyle = "#FFFFFF";
 		ctx.fill();
 		ctx.closePath();
-    
+		
 		// Border
 		ctx.beginPath();
 		ctx.rect(0, 0, 620, 500);
 		ctx.fillStyle = "#000000";
 		ctx.stroke();
 		ctx.closePath();
-	
+		
 		// Left paddle, right paddle
 		ctx.beginPath();
 		ctx.rect(2, gameState.paddleLeftY - (constants.PADDLE_LENGTH / 2), 10, constants.PADDLE_LENGTH);
@@ -157,8 +157,8 @@ Source code provided for reference purposes only.
 	}
 	
 	function updateBallPosition() {
-			gameState.ballX += gameState.ballDirectionX * (gameState.ballSpeed * 0.7);
-			gameState.ballY += gameState.ballDirectionY * (gameState.ballSpeed * 0.7);
+		gameState.ballX += gameState.ballDirectionX * (gameState.ballSpeed * 0.7);
+		gameState.ballY += gameState.ballDirectionY * (gameState.ballSpeed * 0.7);
 	}
 	
 	initializeGame();
