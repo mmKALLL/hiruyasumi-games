@@ -10,9 +10,9 @@
 
 (function() {
 	var constants = {
-		FPS: 20,
-		CANVAS_X: 620,
-		CANVAS_Y: 500,
+		FPS: 60,
+		CANVAS_X: 797,
+		CANVAS_Y: 410,
 		T_START: 0,
 		T_STEP: 123, // degrees
 		T_END: 200000,
