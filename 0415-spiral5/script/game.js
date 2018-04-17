@@ -33,20 +33,6 @@
 	var globals = {
 		generatedFunctions: 0, // number of random-variable functions
 
-		// should be in constantDefaults
-		endPauseLength: 500, // milliseconds, pause before mode switch
-		invertOnFinish: false, // revert function outside-in on end
-		fillOnFinish: false, // fill function with white inside-out
-		finishFillStyle: "", // "circle", "func-trace", "next-func"
-		finishFillSpeed: 20, // fps for func, radius/sec for circle
-		onlyBlackWhite: false, // override color settings
-		lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
-		get lineColorFunction: // return func for getting next color
-			function() { 
-				return colorFunctions.randomColorFunction;
-			},
-		
-		
 	};
 
 	// Adjustable by user prior to generating functions.
@@ -56,7 +42,19 @@
 		canvasY: 410,
 		sizeMult: 0.015,
 		
-	}
+                endPauseLength: 500, // milliseconds, pause before mode switch
+                invertOnFinish: false, // revert function outside-in on end
+                fillOnFinish: false, // fill function with white inside-out
+                finishFillStyle: "", // "circle", "func-trace", "next-func"
+                finishFillSpeed: 20, // fps for func, radius/sec for circle
+                onlyBlackWhite: false, // override color settings
+                lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
+                getLineColorFunction: // return func for getting next color
+                        function() { 
+                                return colorFunctions.randomColorFunction;
+                        },
+
+	};
 
 	var constants = {
 		FPS: 20,
@@ -66,7 +64,7 @@
 		T_STEP: 161, // almost 180 to make very sharp turn 
 // degrees; 123 0.01; 92 0.005; 160.0 0.004; 161.0; 160.4; 160.2
 // 160.2, size 0.030 and 0.004 both cool
-		T_END: 20000,
+		T_END: 200000,
 		SIZE_MULTIPLIER: 0.026,
 	};
 
@@ -74,7 +72,7 @@
 		{
 			
 		}
-	]	
+	];
 
 	// gamestate
 	var gs = {
