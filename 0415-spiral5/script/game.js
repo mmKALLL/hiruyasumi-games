@@ -9,18 +9,51 @@
 
 (function() {
 
-// TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
-
 // EXTEND with implementation of CASIO DynaFunc, dynafunc step size/length, repeat dynafunc forever/invert x times and switch, is invert white-out or invert time, are all functions dynamic or only some % loaded from dynamics, random-generate more anims into dynafunc object array or not, pre-compute (one? all?) dynafuncs or not, can draw step of dynafunc be seen or is every step shown fully drawn, smaller max-t and higher size-mult to save time or not, if func is next level of point and dyna next level of func, what is next level of Dyna? 
 
 // EXTEND canvas size settings affect HTML/CSS too, have all of these adjustable and then click ok button to start anims with those settings (walker index.html style but no reload), use LocalStorage for remembering values, export url to allow others to view the same thing, make it possible for individual func to offer to overwrite values in const if prettier, allow randomization of all constant values on new func load (intensity/frequency determined by user), consider UX (descriptions), would it be easy to calculate max-t based on canvas size and size-mult??, does whitening-leaves-shadow-trails of Arora happen in other browsers? caused by canvas size/html size pixel antialias smoothening mismatch?
 
 // TODO rename gs, move current constants to new array of "func define" objects, add function to generate additional funcs randomized into the array, move gs initialpoint to func defining object, add function to handle func switch and gs initializing (using params from const), 
 
+// TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
+
+	var colorFunctions {
+		alwaysBlack: 
+			function(functionNum, lineNum) { return "#000" },
+		randomColorFunction:
+			function(functionNum, lineNum) {
+                                return "rgb(" + Math.random() + "," +
+						Math.random() + "," +
+						Math.random() + ")"
+                        };
+		// randomSaturatedColor
+		// others?
+	};
+
+	var globals = {
+		generatedFunctions: 0, // number of random-variable functions
+
+		// should be in constantDefaults
+		endPauseLength: 500, // milliseconds, pause before mode switch
+		invertOnFinish: false, // revert function outside-in on end
+		fillOnFinish: false, // fill function with white inside-out
+		finishFillStyle: "", // "circle", "func-trace", "next-func"
+		finishFillSpeed: 20, // fps for func, radius/sec for circle
+		onlyBlackWhite: false, // override color settings
+		lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
+		get lineColorFunction: // return func for getting next color
+		function() { return colorFunctions.randomColorFunction; },
+		
+		
+	};
+
+	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
 		fps: 20,
 		canvasX: 800,
 		canvasY: 410,
+		sizeMult: 0.015,
+		
 	}
 
 	var constants = {
