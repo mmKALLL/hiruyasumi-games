@@ -42,7 +42,9 @@
 		onlyBlackWhite: false, // override color settings
 		lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
 		get lineColorFunction: // return func for getting next color
-		function() { return colorFunctions.randomColorFunction; },
+			function() { 
+				return colorFunctions.randomColorFunction;
+			},
 		
 		
 	};
