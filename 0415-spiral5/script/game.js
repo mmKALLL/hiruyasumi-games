@@ -17,15 +17,15 @@
 
 // TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
-	var colorFunctions {
+	var colorFunctions = {
 		alwaysBlack: 
-			function(functionNum, lineNum) { return "#000" },
+			function(functionNum, lineNum) { return "#000"; },
 		randomColorFunction:
 			function(functionNum, lineNum) {
                                 return "rgb(" + Math.random() + "," +
 						Math.random() + "," +
-						Math.random() + ")"
-                        };
+						Math.random() + ")";
+                        },
 		// randomSaturatedColor
 		// others?
 	};
