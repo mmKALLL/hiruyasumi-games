@@ -135,8 +135,10 @@
 	
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
-		newFunc = globals.getNextFunction();
+		newFunc = globals.getNextFunction(); // FIXME undefined value
+		console.log(newFunc);
 		for (key in newFunc) {
+			console.log("processing key " + key);
 			activeFunction[key] = newFunc[key];
 		}
 		activeFunction.previousPointX = activeFunction.startX;
@@ -205,7 +207,7 @@
 	
 	clearCanvas();
 	loadNextFunction();	
-
+	console.log(activeFunction);
 	window.setInterval(function() {
 		update();
 	}, 1000 / constantDefaults.fps);
