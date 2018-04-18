@@ -145,14 +145,16 @@
 	
 	// loop
 	function update() {
+		// TODO handle negative tStep, i.e. decreasing t-value
 		if (activeFuntion.t > activeFunction.tEnd) {
 			//invertColor();
 			functionFinish(); // TODO it should use constants
 			ctx.closePath();
 			clearCanvas();
 		}
+		
 		// Calculate position of next point.
-		gs.t += constants.T_STEP;
+		activeFunction.t += activeFunction.tStep;
 		gs.previousPoint = gs.currentPoint;
 		gs.currentPoint = [functionX(gs.t) + constants.CANVAS_X / 2, functionY(gs.t) + constants.CANVAS_Y / 2]
 		
