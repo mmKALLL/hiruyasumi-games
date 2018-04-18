@@ -74,7 +74,7 @@
                 // others?
         };
 
-	var functions = [
+	var functionList = [
 		{
 			tStart: 0,
 			tStep: 123,
@@ -121,7 +121,7 @@
 	];
 
 	var activeFunction = {};
-
+	console.log("hi");
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
 		newFunc = globals.getNextFunction();
