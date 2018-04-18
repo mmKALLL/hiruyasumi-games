@@ -18,17 +18,6 @@
 // TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
 
-	var globals = {
-		generatedFunctions: 0, // number of random-variable functions
-		getNextFunction:
-			function() { return functionList[ 
-				Math.floor(Math.random * functionList.length)
-				]; 
-			},
-		ignoreOverrides: false, // ignore settings defined by func
-		canvasColor: "#FFF", // color used for clearing canvas
-	};
-
 	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
 		fps: 20,
@@ -124,7 +113,8 @@
 		generatedFunctions: 0, // number of random-variable functions
 		getNextFunction:
 			function() { return functionList[ 
-				Math.floor(Math.random * functionList.length)
+				Math.floor(
+				Math.random() * functionList.length)
 				]; 
 			},
 		ignoreOverrides: false, // ignore settings defined by func
@@ -163,6 +153,7 @@
 	// loop
 	function update() {
 		// TODO handle negative tStep, i.e. decreasing t-value
+		// TODO also handle undefined tStep
 		if (activeFunction.t > activeFunction.tEnd) {
 			functionFinish();
 			return 0;
