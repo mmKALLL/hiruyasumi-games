@@ -20,7 +20,7 @@
 
 	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
-		fps: 20,
+		fps: 40,
 		canvasX: 800, // TODO get size from CSS definition
 		canvasY: 410,
 		startX: 400,
