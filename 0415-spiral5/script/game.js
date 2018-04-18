@@ -17,20 +17,6 @@
 
 // TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
-	var colorFunctions = {
-		alwaysBlack: 
-			function(functionNum, lineNum) { return "#000"; },
-		alwaysWhite:
-			function(functionNum, lineNum) { return "#FFF"; },
-		randomColorFunction:
-			function(functionNum, lineNum) {
-                                return "rgb(" + Math.random() + "," +
-						Math.random() + "," +
-						Math.random() + ")";
-                        },
-		// randomSaturatedColor
-		// others?
-	};
 
 	var globals = {
 		generatedFunctions: 0, // number of random-variable functions
@@ -71,6 +57,21 @@
 		functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
         	functionY: function(t) { return t * activeFunction.sizeMult * Math.cos(t * Math.PI / 180); },
 	};
+
+	var colorFunctions = {
+                alwaysBlack:
+                        function(functionNum, lineNum) { return "#000"; },
+                alwaysWhite:
+                        function(functionNum, lineNum) { return "#FFF"; },
+                randomColorFunction:
+                        function(functionNum, lineNum) {
+                                return "rgb(" + Math.random() + "," +
+                                                Math.random() + "," +
+                                                Math.random() + ")";
+                        },
+                // randomSaturatedColor
+                // others?
+        };
 
 	var functions = [
 		{
@@ -133,7 +134,9 @@
 		activeFunction.t = activeFunction.tStart;
 	}
 
+	// TODO functionFinish should use constants, etc
 	function functionFinish() {
+		// invertColor();
 		loadNewFunction();
 		ctx.closePath();
                 clearCanvas();
@@ -147,16 +150,16 @@
 	function update() {
 		// TODO handle negative tStep, i.e. decreasing t-value
 		if (activeFuntion.t > activeFunction.tEnd) {
-			//invertColor();
-			functionFinish(); // TODO it should use constants
-			ctx.closePath();
-			clearCanvas();
+			functionFinish();
+			return 0;
 		}
 		
 		// Calculate position of next point.
 		activeFunction.t += activeFunction.tStep;
-		gs.previousPoint = gs.currentPoint;
-		gs.currentPoint = [functionX(gs.t) + constants.CANVAS_X / 2, functionY(gs.t) + constants.CANVAS_Y / 2]
+		activeFunction.previousPointX = activeFunction.currentPointX;
+		activeFunction.previousPointY = activeFunction.currentPointY;
+		activeFunction.currentPointX = activeFunction.functionX(activeFunction.t) + activeFunction.startX;
+		activeFunction.currentPointY = activeFunction.functionY(activeFunction.t) + activeFunction.startY;
 		
 		draw();
 	}
