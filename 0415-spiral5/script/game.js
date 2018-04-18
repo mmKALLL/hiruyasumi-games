@@ -67,18 +67,18 @@
 		{
 			tStart: 0,
 			tStep: 123,
-			tEnd: 80000,
+			tEnd: 200000,
 			sizeMult: 0.01
 		},
                 {
                         tStart: 0,
-                        tStep: 162.04,
-                        tEnd: 70000,
+                        tStep: 162.3,
+                        tEnd: 200000,
                         sizeMult: 0.034
                 },
                 {
                         tStart: 0,
-                        tStep: 162.02,
+                        tStep: 164,
                         tEnd: 200000,
                         sizeMult: 0.001
                 },
@@ -86,27 +86,32 @@
                         tStart: 0,
                         tStep: 91,
                         tEnd: 200000,
-                        sizeMult: 0.001
+                        sizeMult: 0.002
                 },
                 {
                         tStart: 0,
                         tStep: 87.8,
-                        tEnd: 80000,
+                        tEnd: 150000,
                         sizeMult: 0.01
                 },
                 {
                         tStart: 0,
                         tStep: 61,
                         tEnd: 100000,
-                        sizeMult: 0.005
+                        sizeMult: 0.015
                 },
                 {
                         tStart: 10000,
                         tStep: 181.5,
-                        tEnd: 100000,
+                        tEnd: 250000,
                         sizeMult: 0.005
                 },
-
+		{
+			tStart: 15000,
+			tStep: 185,
+			tEnd: 250000,
+			sizeMult: 0.01
+		},
 	];
 
 	var globals = {
