@@ -34,7 +34,7 @@
 
 	var globals = {
 		generatedFunctions: 0, // number of random-variable functions
-		getNextFunc:
+		getNextFunction:
 			function() { return functionList[ 
 				Math.floor(Math.random * functionList.length)
 			]; },
@@ -68,8 +68,8 @@
                                 return colorFunctions.randomColorFunction;
                         },
 
-		functionX: function(t) { return t * state.sizeMult * Math.sin(t * Math.PI / 180); },
-        	functionY: function(t) { return t * state.sizeMult * Math.cos(t * Math.PI / 180); },
+		functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
+        	functionY: function(t) { return t * activeFunction.sizeMult * Math.cos(t * Math.PI / 180); },
 	};
 
 	var functions = [
@@ -103,25 +103,35 @@
                         tEnd: 200000,
                         sizeMult: 0.01
                 },
+                {
+                        tStart: 0,
+                        tStep: 61,
+                        tEnd: 200000,
+                        sizeMult: 0.005
+                },
+                {
+                        tStart: 10000,
+                        tStep: 181.5,
+                        tEnd: 200000,
+                        sizeMult: 0.005
+                },
 
 	];
 
-	var activeFunction = {};
+	var activeFunction = {
 
-	// gamestate
-	var gs = { 
-		t: [constants.CANVAS_X /izeMult: 0.01
-                },
-2, constants.CANVAS_Y / 2],
-		previousPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
+		previousPointX: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
 		currentPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
 		t: constants.T_START,
 	};
+
+	function loadNewFunction() {
+		
+	}
+
 	var canvas = document.getElementById("gameCanvas");
 	var ctx = canvas.getContext("2d");
 	
-	function functionX(t) { return t * constants.SIZE_MULTIPLIER * Math.sin(t * Math.PI / 180); }
-	function functionY(t) { return t * constants.SIZE_MULTIPLIER * Math.cos(t * Math.PI / 180); }
 	
 	// loop
 	function update() {
