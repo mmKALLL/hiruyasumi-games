@@ -67,7 +67,7 @@
 		{
 			tStart: 0,
 			tStep: 123,
-			tEnd: 200000,
+			tEnd: 140000,
 			sizeMult: 0.01
 		},
                 {
