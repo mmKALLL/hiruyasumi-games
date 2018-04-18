@@ -126,7 +126,15 @@
 	};
 
 	function loadNewFunction() {
-		
+		activeFunction = constantDefaults;
+		newFunc = globals.getNextFunction();
+		for (key in newFunc) {
+			activeFunction[key] = newFunc[key];
+		}
+		activeFunction.previousPointX = activeFunction.startX;
+		activeFunction.previousPointY = activeFunction.startY;
+		activeFunction.currentPointX = activeFunction.startX;
+		activeFunction.currentPointY = activeFunction.startY;
 	}
 
 	var canvas = document.getElementById("gameCanvas");
