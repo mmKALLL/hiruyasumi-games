@@ -122,7 +122,7 @@
 
 	var activeFunction = {};
 
-	function loadNewFunction() {
+	function loadNextFunction() {
 		activeFunction = constantDefaults;
 		newFunc = globals.getNextFunction();
 		for (key in newFunc) {
@@ -138,7 +138,7 @@
 	// TODO functionFinish should use constants, etc
 	function functionFinish() {
 		// invertColor();
-		loadNewFunction();
+		loadNextFunction();
 		ctx.closePath();
                 clearCanvas();
 	}
@@ -194,7 +194,6 @@
 	
 	clearCanvas();
 	loadNextFunction();	
-	alert(activeFunction);
 
 	window.setInterval(function() {
 		update();
