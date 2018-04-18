@@ -23,7 +23,8 @@
 		getNextFunction:
 			function() { return functionList[ 
 				Math.floor(Math.random * functionList.length)
-			]; },
+				]; 
+			},
 		ignoreOverrides: false, // ignore settings defined by func
 		canvasColor: "#FFF", // color used for clearing canvas
 	};
@@ -149,7 +150,7 @@
 	// loop
 	function update() {
 		// TODO handle negative tStep, i.e. decreasing t-value
-		if (activeFuntion.t > activeFunction.tEnd) {
+		if (activeFunction.t > activeFunction.tEnd) {
 			functionFinish();
 			return 0;
 		}
@@ -193,6 +194,7 @@
 	
 	clearCanvas();
 	loadNextFunction();	
+	alert(activeFunction);
 
 	window.setInterval(function() {
 		update();
