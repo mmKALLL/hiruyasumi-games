@@ -21,7 +21,7 @@
 	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
 		fps: 20,
-		canvasX: 800,
+		canvasX: 800, // TODO get size from CSS definition
 		canvasY: 410,
 		startX: 400,
 		startY: 205,
@@ -67,13 +67,13 @@
 		{
 			tStart: 0,
 			tStep: 123,
-			tEnd: 200000,
+			tEnd: 80000,
 			sizeMult: 0.01
 		},
                 {
                         tStart: 0,
                         tStep: 162.04,
-                        tEnd: 200000,
+                        tEnd: 70000,
                         sizeMult: 0.034
                 },
                 {
@@ -91,19 +91,19 @@
                 {
                         tStart: 0,
                         tStep: 87.8,
-                        tEnd: 200000,
+                        tEnd: 80000,
                         sizeMult: 0.01
                 },
                 {
                         tStart: 0,
                         tStep: 61,
-                        tEnd: 200000,
+                        tEnd: 100000,
                         sizeMult: 0.005
                 },
                 {
                         tStart: 10000,
                         tStep: 181.5,
-                        tEnd: 200000,
+                        tEnd: 100000,
                         sizeMult: 0.005
                 },
 
