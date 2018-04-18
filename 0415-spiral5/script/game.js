@@ -34,8 +34,12 @@
 
 	var globals = {
 		generatedFunctions: 0, // number of random-variable functions
+		getNextFunc:
+			function() { return functionList[ 
+				Math.floor(Math.random * functionList.length)
+			]; },
 		ignoreOverrides: false, // ignore settings defined by func
-		canvasColor: "#FFF", // default color for canvas clear
+		canvasColor: "#FFF", // color used for clearing canvas
 	};
 
 	// Adjustable by user prior to generating functions.
@@ -43,16 +47,18 @@
 		fps: 20,
 		canvasX: 800,
 		canvasY: 410,
+		tStart: 0, // supposed to be overwritten by func
+		tEnd: -1,  // supposed to be overwritten by func
 		sizeMult: 0.015,
 		
                 endPauseLength: 500, // milliseconds, pause before mode switch
                 invertOnFinish: false, // revert function outside-in on end
                 fillOnFinish: false, // fill function with white inside-out
-		clearOnFinish: false, // clear screen 
                 finishFillStyle: "", // "circle", "func-trace", "next-func"
                 finishFillSpeed: 20, // fps for func, radius/sec for circle
+                clearOnFinish: true, // clear screen after invert/clear/finish
 
-                onlyBlackWhite: false, // override color settings
+                onlyBlackWhite: false, // override all color settings
                 lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
                 getLineColorFunction: // return func for getting next color
                         function() { 
@@ -75,9 +81,13 @@
 
 	var functions = [
 		{
-			
+			tStart: 0,
+			tStep: 123,
+			tEnd
 		}
 	];
+
+	var activeFunction = {};
 
 	// gamestate
 	var gs = {
