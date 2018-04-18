@@ -17,11 +17,35 @@
 
 // TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
+	var colorFunctions = {
+		alwaysBlack: 
+			function(functionNum, lineNum) { return "#000"; },
+		alwaysWhite:
+			function(functionNum, lineNum) { return "#FFF"; },
+		randomColorFunction:
+			function(functionNum, lineNum) {
+                                return "rgb(" + Math.random() + "," +
+						Math.random() + "," +
+						Math.random() + ")";
+                        },
+		// randomSaturatedColor
+		// others?
+	};
+
+	var globals = {
+		generatedFunctions: 0, // number of random-variable functions
+		getNextFunc:
+			function() { return functionList[ 
+				Math.floor(Math.random * functionList.length)
+			]; },
+		ignoreOverrides: false, // ignore settings defined by func
+		canvasColor: "#FFF", // color used for clearing canvas
+	};
 
 	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
-		fps: 40,
-		canvasX: 800, // TODO get size from CSS definition
+		fps: 20,
+		canvasX: 800,
 		canvasY: 410,
 		startX: 400,
 		startY: 205,
@@ -44,132 +68,45 @@
                                 return colorFunctions.randomColorFunction;
                         },
 
-		functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
-        	functionY: function(t) { return t * activeFunction.sizeMult * Math.cos(t * Math.PI / 180); },
 	};
 
-	var colorFunctions = {
-                alwaysBlack:
-                        function(functionNum, lineNum) { return "#000"; },
-                alwaysWhite:
-                        function(functionNum, lineNum) { return "#FFF"; },
-                randomColorFunction:
-                        function(functionNum, lineNum) {
-                                return "rgb(" + Math.random() + "," +
-                                                Math.random() + "," +
-                                                Math.random() + ")";
-                        },
-                // randomSaturatedColor
-                // others?
-        };
-
-	var functionList = [
+	var functions = [
 		{
 			tStart: 0,
 			tStep: 123,
-			tEnd: 200000,
-			sizeMult: 0.01
-		},
-                {
-                        tStart: 0,
-                        tStep: 162.3,
-                        tEnd: 200000,
-                        sizeMult: 0.034
-                },
-                {
-                        tStart: 0,
-                        tStep: 164,
-                        tEnd: 200000,
-                        sizeMult: 0.001
-                },
-                {
-                        tStart: 0,
-                        tStep: 91,
-                        tEnd: 200000,
-                        sizeMult: 0.002
-                },
-                {
-                        tStart: 0,
-                        tStep: 87.8,
-                        tEnd: 150000,
-                        sizeMult: 0.01
-                },
-                {
-                        tStart: 0,
-                        tStep: 61,
-                        tEnd: 100000,
-                        sizeMult: 0.015
-                },
-                {
-                        tStart: 10000,
-                        tStep: 181.5,
-                        tEnd: 250000,
-                        sizeMult: 0.005
-                },
-		{
-			tStart: 15000,
-			tStep: 185,
-			tEnd: 250000,
-			sizeMult: 0.01
-		},
+			tEnd: 
+		}
 	];
 
-	var globals = {
-		generatedFunctions: 0, // number of random-variable functions
-		getNextFunction:
-			function() { return functionList[ 
-				Math.floor(
-				Math.random() * functionList.length)
-				]; 
-			},
-		ignoreOverrides: false, // ignore settings defined by func
-		canvasColor: "#FFF", // color used for clearing canvas
-	};
-
 	var activeFunction = {};
-	
-	function loadNextFunction() {
-		activeFunction = constantDefaults;
-		newFunc = globals.getNextFunction(); // FIXME undefined value
-		console.log(newFunc);
-		for (key in newFunc) {
-			console.log("processing key " + key);
-			activeFunction[key] = newFunc[key];
-		}
-		activeFunction.previousPointX = activeFunction.startX;
-		activeFunction.previousPointY = activeFunction.startY;
-		activeFunction.currentPointX = activeFunction.startX;
-		activeFunction.currentPointY = activeFunction.startY;
-		activeFunction.t = activeFunction.tStart;
-	}
 
-	// TODO functionFinish should use constants, etc
-	function functionFinish() {
-		// invertColor();
-		loadNextFunction();
-		ctx.closePath();
-                clearCanvas();
-	}
-
+	// gamestate
+	var gs = {
+		initialPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
+		previousPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
+		currentPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
+		t: constants.T_START,
+	};
 	var canvas = document.getElementById("gameCanvas");
 	var ctx = canvas.getContext("2d");
 	
+	function functionX(t) { return t * constants.SIZE_MULTIPLIER * Math.sin(t * Math.PI / 180); }
+	function functionY(t) { return t * constants.SIZE_MULTIPLIER * Math.cos(t * Math.PI / 180); }
 	
 	// loop
 	function update() {
-		// TODO handle negative tStep, i.e. decreasing t-value
-		// TODO also handle undefined tStep
-		if (activeFunction.t > activeFunction.tEnd) {
-			functionFinish();
-			return 0;
+		if (gs.t > constants.T_END) {
+			//invertColor();
+			gs.t = constants.T_START;
+			ctx.closePath();
+			ctx.moveTo(gs.initialPoint[0], gs.initialPoint[1]);
+			ctx.closePath();
+			clearCanvas();
 		}
-		
 		// Calculate position of next point.
-		activeFunction.t += activeFunction.tStep;
-		activeFunction.previousPointX = activeFunction.currentPointX;
-		activeFunction.previousPointY = activeFunction.currentPointY;
-		activeFunction.currentPointX = activeFunction.functionX(activeFunction.t) + activeFunction.startX;
-		activeFunction.currentPointY = activeFunction.functionY(activeFunction.t) + activeFunction.startY;
+		gs.t += constants.T_STEP;
+		gs.previousPoint = gs.currentPoint;
+		gs.currentPoint = [functionX(gs.t) + constants.CANVAS_X / 2, functionY(gs.t) + constants.CANVAS_Y / 2]
 		
 		draw();
 	}
@@ -178,10 +115,8 @@
 		
 		// Draw line from previous point to current.
 		ctx.beginPath();
-		ctx.moveTo(activeFunction.previousPointX, 
-				activeFunction.previousPointY);
-		ctx.lineTo(activeFunction.currentPointX,
-				activeFunction.currentPointY);
+		ctx.moveTo(gs.previousPoint[0], gs.previousPoint[1]);
+		ctx.lineTo(gs.currentPoint[0], gs.currentPoint[1]);
 		ctx.stroke();
 	}
 	
@@ -202,10 +137,9 @@
 	}
 	
 	clearCanvas();
-	loadNextFunction();	
-	console.log(activeFunction);
+	
 	window.setInterval(function() {
 		update();
-	}, 1000 / constantDefaults.fps);
+	}, 1000 / constants.FPS);
 	
 })();
