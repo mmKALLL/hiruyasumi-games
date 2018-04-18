@@ -118,12 +118,7 @@
 
 	];
 
-	var activeFunction = {
-
-		previousPointX: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
-		currentPoint: [constants.CANVAS_X / 2, constants.CANVAS_Y / 2],
-		t: constants.T_START,
-	};
+	var activeFunction = {};
 
 	function loadNewFunction() {
 		activeFunction = constantDefaults;
@@ -135,6 +130,7 @@
 		activeFunction.previousPointY = activeFunction.startY;
 		activeFunction.currentPointX = activeFunction.startX;
 		activeFunction.currentPointY = activeFunction.startY;
+		activeFunction.t = activeFunction.tStart;
 	}
 
 	var canvas = document.getElementById("gameCanvas");
@@ -163,8 +159,10 @@
 		
 		// Draw line from previous point to current.
 		ctx.beginPath();
-		ctx.moveTo(gs.previousPoint[0], gs.previousPoint[1]);
-		ctx.lineTo(gs.currentPoint[0], gs.currentPoint[1]);
+		ctx.moveTo(activeFunction.previousPointX, 
+				activeFunction.previousPointY);
+		ctx.lineTo(activeFunction.currentPointX,
+				activeFunction.currentPointY);
 		ctx.stroke();
 	}
 	
@@ -185,7 +183,8 @@
 	}
 	
 	clearCanvas();
-	
+	loadNextFunction();	
+
 	window.setInterval(function() {
 		update();
 	}, 1000 / constants.FPS);
