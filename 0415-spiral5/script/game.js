@@ -20,6 +20,8 @@
 	var colorFunctions = {
 		alwaysBlack: 
 			function(functionNum, lineNum) { return "#000"; },
+		alwaysWhite:
+			function(functionNum, lineNum) { return "#FFF"; },
 		randomColorFunction:
 			function(functionNum, lineNum) {
                                 return "rgb(" + Math.random() + "," +
@@ -32,7 +34,8 @@
 
 	var globals = {
 		generatedFunctions: 0, // number of random-variable functions
-
+		ignoreOverrides: false, // ignore settings defined by func
+		canvasColor: "#FFF", // default color for canvas clear
 	};
 
 	// Adjustable by user prior to generating functions.
@@ -45,8 +48,10 @@
                 endPauseLength: 500, // milliseconds, pause before mode switch
                 invertOnFinish: false, // revert function outside-in on end
                 fillOnFinish: false, // fill function with white inside-out
+		clearOnFinish: false, // clear screen 
                 finishFillStyle: "", // "circle", "func-trace", "next-func"
                 finishFillSpeed: 20, // fps for func, radius/sec for circle
+
                 onlyBlackWhite: false, // override color settings
                 lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
                 getLineColorFunction: // return func for getting next color
