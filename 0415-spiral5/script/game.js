@@ -132,7 +132,7 @@
 	};
 
 	var activeFunction = {};
-	console.log("hi");
+	
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
 		newFunc = globals.getNextFunction();
@@ -208,6 +208,6 @@
 
 	window.setInterval(function() {
 		update();
-	}, 1000 / constants.FPS);
+	}, 1000 / constantDefaults.fps);
 	
 })();
