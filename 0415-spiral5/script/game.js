@@ -120,6 +120,17 @@
 
 	];
 
+	var globals = {
+		generatedFunctions: 0, // number of random-variable functions
+		getNextFunction:
+			function() { return functionList[ 
+				Math.floor(Math.random * functionList.length)
+				]; 
+			},
+		ignoreOverrides: false, // ignore settings defined by func
+		canvasColor: "#FFF", // color used for clearing canvas
+	};
+
 	var activeFunction = {};
 	console.log("hi");
 	function loadNextFunction() {
