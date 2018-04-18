@@ -133,17 +133,21 @@
 		activeFunction.t = activeFunction.tStart;
 	}
 
+	function functionFinish() {
+		loadNewFunction();
+		ctx.closePath();
+                clearCanvas();
+	}
+
 	var canvas = document.getElementById("gameCanvas");
 	var ctx = canvas.getContext("2d");
 	
 	
 	// loop
 	function update() {
-		if (gs.t > constants.T_END) {
+		if (activeFuntion.t > activeFunction.tEnd) {
 			//invertColor();
-			gs.t = constants.T_START;
-			ctx.closePath();
-			ctx.moveTo(gs.initialPoint[0], gs.initialPoint[1]);
+			functionFinish(); // TODO it should use constants
 			ctx.closePath();
 			clearCanvas();
 		}
