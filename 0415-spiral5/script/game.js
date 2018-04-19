@@ -117,10 +117,8 @@
 			tStep: 1,
 			tEnd: 500,
 			functionX: function(t) { return t },
-			functionY: function(t) { return 0.05*t*t*t - t*t },
-			sizeMult: 0.001,
-			startX: -500,
-			startY: 0,
+			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.00001*(t*t*t) + 0.0005*t*t },
+			sizeMult: 0.00001,
 		},
 	];
 
