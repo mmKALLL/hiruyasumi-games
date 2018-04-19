@@ -118,6 +118,9 @@
 			tEnd: 500,
 			functionX: function(t) { return t },
 			functionY: function(t) { return 0.05*t*t*t - t*t },
+			sizeMult: 0.001,
+			startX: -500,
+			startY: 0,
 		},
 	];
 
