@@ -80,13 +80,13 @@
                         tStart: 0,
                         tStep: 164,
                         tEnd: 200000,
-                        sizeMult: 0.001
+                        sizeMult: 0.002
                 },
                 {
                         tStart: 0,
                         tStep: 91,
                         tEnd: 200000,
-                        sizeMult: 0.002
+                        sizeMult: 0.005
                 },
                 {
                         tStart: 0,
@@ -149,6 +149,7 @@
 		lineNum = 0;
 		lineColorFunction = activeFunction.getLineColorFunction();
 		lineColor = lineColorFunction(functionNum, lineNum);
+		console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
 	}
 
 	// TODO functionFinish should use constants, etc
@@ -174,8 +175,9 @@
 		
 		// Figure out if we need to change stroke color.
 		lineNum += 1;
-		if (lineNum % activeFunction.lineColorLength === 0) {
-			
+		if (activeFunction.lineColorLength > 0 &&
+		lineNum % activeFunction.lineColorLength === 0) {
+			lineColor = lineColorFunction();
 		}
 
 		// Calculate position of next point.
@@ -192,6 +194,7 @@
 		
 		// Draw line from previous point to current.
 		ctx.beginPath();
+		ctx.strokeStyle = lineColor;
 		ctx.moveTo(activeFunction.previousPointX, 
 				activeFunction.previousPointY);
 		ctx.lineTo(activeFunction.currentPointX,
@@ -200,7 +203,7 @@
 	}
 	
 	function invertColor() {
-		var color = ctx.strokeStyle === "#000000" ? "#FFFFFF" : "#000000"
+		var color = ctx.strokeStyle !== "#FFFFFF" ? "#FFFFFF" : "#000000"
 		ctx.strokeStyle = color;
 		ctx.fillStyle = color;
 	}
