@@ -112,6 +112,13 @@
 			tEnd: 250000,
 			sizeMult: 0.01
 		},
+		{
+			tStart: -500,
+			tStep: 1,
+			tEnd: 500,
+			functionX: function(t) { return t },
+			functionY: function(t) { return 0.05*t*t*t - t*t },
+		},
 	];
 
 	var globals = {
