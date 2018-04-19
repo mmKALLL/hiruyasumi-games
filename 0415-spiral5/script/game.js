@@ -127,8 +127,10 @@
 	};
 
 	var activeFunction = {};
-	var funcNum = 0;
+	var functionNum = 0;
 	var lineNum = 0;
+	var lineColorFunction;
+	var lineColor;
 	
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
@@ -143,8 +145,10 @@
 		activeFunction.currentPointX = activeFunction.startX;
 		activeFunction.currentPointY = activeFunction.startY;
 		activeFunction.t = activeFunction.tStart;
-		funcNum += 1;
+		functionNum += 1;
 		lineNum = 0;
+		lineColorFunction = activeFunction.getLineColorFunction();
+		lineColor = lineColorFunction(functionNum, lineNum);
 	}
 
 	// TODO functionFinish should use constants, etc
@@ -168,6 +172,12 @@
 			return 0;
 		}
 		
+		// Figure out if we need to change stroke color.
+		lineNum += 1;
+		if (lineNum % activeFunction.lineColorLength === 0) {
+			
+		}
+
 		// Calculate position of next point.
 		activeFunction.t += activeFunction.tStep;
 		activeFunction.previousPointX = activeFunction.currentPointX;
