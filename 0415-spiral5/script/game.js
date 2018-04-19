@@ -27,7 +27,7 @@
 		startY: 205,
 		
 		tStart: 0, // supposed to be overwritten by func
-		tEnd: -1,  // supposed to be overwritten by func
+		frames: 800, // length to play animations for
 		sizeMult: 0.015,
 		
                 endPauseLength: 500, // milliseconds, pause before mode switch
@@ -55,9 +55,9 @@
                         function(functionNum, lineNum) { return "#FFF"; },
                 randomColorFunction:
                         function(functionNum, lineNum) {
-                                return "rgb(" + Math.random() + "," +
-                                                Math.random() + "," +
-                                                Math.random() + ")";
+                                return globals.Color(Math.random(),
+                                                Math.random(),
+                                                Math.random());
                         },
                 // randomSaturatedColor
                 // others?
@@ -97,25 +97,27 @@
                 {
                         tStart: 0,
                         tStep: 61,
-                        tEnd: 100000,
+			tEnd: 60000,
                         sizeMult: 0.015
                 },
                 {
                         tStart: 10000,
                         tStep: 181.5,
                         tEnd: 250000,
-                        sizeMult: 0.005
+			frames: 500,
+                        sizemult: 0.005
                 },
 		{
-			tStart: 15000,
+			tStart: 2000,
 			tStep: 185,
 			tEnd: 250000,
+			frames: 500,
 			sizeMult: 0.01
 		},
 		{
-			tStart: -500,
+			tStart: -400,
 			tStep: 1,
-			tEnd: 500,
+			tEnd: 400,
 			functionX: function(t) { return t },
 			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.00001*(t*t*t) + 0.0005*t*t },
 			sizeMult: 0.00001,
@@ -123,6 +125,8 @@
 	];
 
 	var globals = {
+		Color: net.brehaut.Color,
+
 		generatedFunctions: 0, // number of random-variable functions
 		getNextFunction:
 			function() { return functionList[ 
@@ -176,7 +180,7 @@
 	function update() {
 		// TODO handle negative tStep, i.e. decreasing t-value
 		// TODO also handle undefined tStep
-		if (activeFunction.t > activeFunction.tEnd) {
+		if (activeFunction.frames < lineNum) {
 			functionFinish();
 			return 0;
 		}
