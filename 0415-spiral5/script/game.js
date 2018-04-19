@@ -80,7 +80,7 @@
                         tStart: 0,
                         tStep: 164,
                         tEnd: 200000,
-                        sizeMult: 0.002
+                        sizeMult: 0.005
                 },
                 {
                         tStart: 0,
@@ -147,9 +147,9 @@
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
 		newFunc = globals.getNextFunction(); // FIXME undefined value
-		console.log(newFunc);
+		//console.log(newFunc);
 		for (key in newFunc) {
-			console.log("processing key " + key);
+			//console.log("processing key " + key);
 			activeFunction[key] = newFunc[key];
 		}
 		activeFunction.previousPointX = activeFunction.startX;
@@ -161,7 +161,7 @@
 		lineNum = 0;
 		lineColorFunction = activeFunction.getLineColorFunction();
 		lineColor = lineColorFunction(functionNum, lineNum);
-		console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
+		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
 	}
 
 	// TODO functionFinish should use constants, etc
@@ -231,7 +231,7 @@
 	}
 	
 	functionFinish();
-	console.log(activeFunction);
+	//console.log(activeFunction);
 	window.setInterval(function() {
 		update();
 	}, 1000 / constantDefaults.fps);
