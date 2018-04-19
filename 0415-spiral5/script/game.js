@@ -38,7 +38,7 @@
                 clearOnFinish: true, // clear screen after invert/clear/finish
 
                 onlyBlackWhite: false, // override all color settings
-                lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
+                lineColorLength: 40, // number of lines to draw per color, 0: one line color per function
                 getLineColorFunction: // return func for getting next color
                         function() { 
                                 return colorFunctions.randomColorFunction;
@@ -127,6 +127,8 @@
 	};
 
 	var activeFunction = {};
+	var funcNum = 0;
+	var lineNum = 0;
 	
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
@@ -141,6 +143,8 @@
 		activeFunction.currentPointX = activeFunction.startX;
 		activeFunction.currentPointY = activeFunction.startY;
 		activeFunction.t = activeFunction.tStart;
+		funcNum += 1;
+		lineNum = 0;
 	}
 
 	// TODO functionFinish should use constants, etc
@@ -201,8 +205,7 @@
 	        ctx.fillStyle = "#000000";
 	}
 	
-	clearCanvas();
-	loadNextFunction();	
+	functionFinish();
 	console.log(activeFunction);
 	window.setInterval(function() {
 		update();
