@@ -13,9 +13,7 @@
 
 // EXTEND canvas size settings affect HTML/CSS too, have all of these adjustable and then click ok button to start anims with those settings (walker index.html style but no reload), use LocalStorage for remembering values, export url to allow others to view the same thing, make it possible for individual func to offer to overwrite values in const if prettier, allow randomization of all constant values on new func load (intensity/frequency determined by user), consider UX (descriptions), would it be easy to calculate max-t based on canvas size and size-mult??, does whitening-leaves-shadow-trails of Arora happen in other browsers? caused by canvas size/html size pixel antialias smoothening mismatch?
 
-// TODO rename gs, move current constants to new array of "func define" objects, add function to generate additional funcs randomized into the array, move gs initialpoint to func defining object, add function to handle func switch and gs initializing (using params from const), 
-
-// TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
+// DONE rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
 
 	// Adjustable by user prior to generating functions.
@@ -153,7 +151,7 @@
 	function loadNextFunction() {
 		activeFunction = {};
 		activeFunction = constantDefaults;
-		newFunc = globals.getNextFunction(); // FIXME undefined value
+		newFunc = globals.getNextFunction();
 		//console.log(newFunc);
 		for (key in newFunc) {
 			//console.log("processing key " + key);
