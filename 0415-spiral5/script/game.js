@@ -30,7 +30,7 @@
 		frames: 800, // length to play animations for
 		sizeMult: 0.015,
 		
-                endPauseLength: 500, // milliseconds, pause before mode switch
+                endPauseLength: 1500, // milliseconds, pause before mode switch
                 invertOnFinish: false, // revert function outside-in on end
                 fillOnFinish: false, // fill function with white inside-out
                 finishFillStyle: "", // "circle", "func-trace", "next-func"
@@ -143,6 +143,7 @@
 	var lineNum = 0;
 	var lineColorFunction;
 	var lineColor;
+	var sleeping = false;
 	
 	function loadNextFunction() {
 		activeFunction = constantDefaults;
@@ -163,13 +164,17 @@
 		lineColor = lineColorFunction(functionNum, lineNum);
 		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
 	}
-
+	console.log(window);
 	// TODO functionFinish should use constants, etc
 	function functionFinish() {
 		// invertColor();
-		loadNextFunction();
-		ctx.closePath();
-                clearCanvas();
+		sleeping = true;
+		window.setTimeout(function() {
+			sleeping = false;
+			loadNextFunction();
+	                ctx.closePath();
+	                clearCanvas();
+		}, activeFunction.endPauseLength);
 	}
 
 	var canvas = document.getElementById("gameCanvas");
@@ -184,7 +189,11 @@
 			functionFinish();
 			return 0;
 		}
-		
+
+		if (sleeping) {
+			return 0;
+		}		
+
 		// Figure out if we need to change stroke color.
 		lineNum += 1;
 		if (activeFunction.lineColorLength > 0 &&
