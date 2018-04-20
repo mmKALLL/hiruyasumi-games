@@ -74,30 +74,35 @@
                         tStart: 0,
                         tStep: 162.3,
                         tEnd: 200000,
+			frames: 500,
                         sizeMult: 0.034
                 },
                 {
                         tStart: 0,
                         tStep: 164,
                         tEnd: 200000,
+			frames:	500,
                         sizeMult: 0.005
                 },
                 {
                         tStart: 0,
                         tStep: 91,
                         tEnd: 200000,
+			frames: 500,
                         sizeMult: 0.005
                 },
                 {
                         tStart: 0,
                         tStep: 87.8,
                         tEnd: 150000,
+			frames: 500,
                         sizeMult: 0.01
                 },
                 {
                         tStart: 0,
                         tStep: 61,
 			tEnd: 60000,
+			frames: 500,
                         sizeMult: 0.015
                 },
                 {
@@ -146,6 +151,7 @@
 	var sleeping = false;
 	
 	function loadNextFunction() {
+		activeFunction = {};
 		activeFunction = constantDefaults;
 		newFunc = globals.getNextFunction(); // FIXME undefined value
 		//console.log(newFunc);
