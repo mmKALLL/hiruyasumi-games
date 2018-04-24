@@ -119,11 +119,11 @@
 		},
 		{
 			tStart: -400,
-			tStep: 1,
-			tEnd: 400,
-			functionX: function(t) { return t },
-			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.00001*(t*t*t) + 0.0005*t*t },
-			sizeMult: 0.00001,
+			tStep: 10,
+			tEnd: 4000,
+			//functionX: function(t) { return t },
+			//functionY: function(t) { return 0.005*t*Math.sin(t) + 0.0000001*(t*t*t) + 0.000005*t*t },
+			//sizeMult: 0.001,
 		},
 	];
 
@@ -147,10 +147,9 @@
 	var lineColorFunction;
 	var lineColor;
 	var sleeping = false;
-	
 	function loadNextFunction() {
 		activeFunction = {};
-		activeFunction = constantDefaults;
+		activeFunction = constantDefaults; // FIXME: This is a reference, not a copy. newFunc key writes will modify constantDefaults as well.
 		newFunc = globals.getNextFunction();
 		//console.log(newFunc);
 		for (key in newFunc) {
@@ -168,7 +167,7 @@
 		lineColor = lineColorFunction(functionNum, lineNum);
 		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
 	}
-	console.log(window);
+	//console.log(window);
 	// TODO functionFinish should use constants, etc
 	function functionFinish() {
 		// invertColor();
