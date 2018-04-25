@@ -123,7 +123,7 @@
 			tStep: 1,
 			tEnd: 400,
 			functionX: function(t) { return t },
-			functionY: function(t) { return 0.05*t*Math.sin(t) + 0.00001*(t*t*t) + 0.0005*t*t },
+			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.000001*(t*t*t) + 0.0005*t*t },
 			sizeMult: 0.001,
 		},
 	];
