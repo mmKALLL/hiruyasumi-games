@@ -123,7 +123,7 @@
 			tStep: 1,
 			tEnd: 400,
 			functionX: function(t) { return t },
-			functionY: function(t) { return 0.11*t*Math.sin(t) + 0.0000048*(t*t*t) + 0.0005*t*t },
+			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.0000048*(t*t*t) + 0.0005*t*t },
 			sizeMult: 0.001,
 		},
 	];
@@ -145,7 +145,6 @@
 	var activeFunction = {};
 	var functionNum = 0;
 	var lineNum = 0;
-	var lineColorFunction;
 	var lineColor;
 	var sleeping = false;
 	function loadNextFunction() {
@@ -205,7 +204,7 @@
 		lineNum += 1;
 		if (activeFunction.lineColorLength > 0 &&
 		lineNum % activeFunction.lineColorLength === 0) {
-			lineColor = lineColorFunction();
+			lineColor = activeFunction.getLineColor(functionNum, lineNum);
 		}
 
 		// Calculate position of next point.
@@ -219,8 +218,8 @@
 	}
 	
 	function draw() {
-		if (lineNum < 2)
-			return 0;		
+		//if (lineNum < 2)
+		//	return 0;		
 	
 		// Draw line from previous point to current.
 		ctx.beginPath();
