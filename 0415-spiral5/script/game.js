@@ -15,6 +15,21 @@
 
 // DONE rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
+	var colorFunctions = {
+                alwaysBlack:
+                        function(functionNum, lineNum) { return "#000"; },
+                alwaysWhite:
+                        function(functionNum, lineNum) { return "#FFF"; },
+                randomColorFunction:
+                        function(functionNum, lineNum) {
+                                return globals.Color(Math.random(),
+                                                Math.random(),
+                                                Math.random());
+                        },
+                // randomSaturatedColor
+                // others?
+        };
+
 
 	// Adjustable by user prior to generating functions.
 	var constantDefaults = {
@@ -37,29 +52,15 @@
 
                 onlyBlackWhite: false, // override all color settings
                 lineColorLength: 40, // number of lines to draw per color, 0: one line color per function
-                getLineColorFunction: // return func for getting next color
-                        function() { 
+                getLineColor: // return func for getting next color
+                        (function() {
+				// Can keep state here if needed
                                 return colorFunctions.randomColorFunction;
-                        },
+                        })(),
 
 		functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
         	functionY: function(t) { return t * activeFunction.sizeMult * Math.cos(t * Math.PI / 180); },
 	};
-
-	var colorFunctions = {
-                alwaysBlack:
-                        function(functionNum, lineNum) { return "#000"; },
-                alwaysWhite:
-                        function(functionNum, lineNum) { return "#FFF"; },
-                randomColorFunction:
-                        function(functionNum, lineNum) {
-                                return globals.Color(Math.random(),
-                                                Math.random(),
-                                                Math.random());
-                        },
-                // randomSaturatedColor
-                // others?
-        };
 
 	var functionList = [
 		{
@@ -119,11 +120,11 @@
 		},
 		{
 			tStart: -400,
-			tStep: 10,
-			tEnd: 4000,
-			//functionX: function(t) { return t },
-			//functionY: function(t) { return 0.005*t*Math.sin(t) + 0.0000001*(t*t*t) + 0.000005*t*t },
-			//sizeMult: 0.001,
+			tStep: 1,
+			tEnd: 400,
+			functionX: function(t) { return t },
+			functionY: function(t) { return 0.05*t*Math.sin(t) + 0.00001*(t*t*t) + 0.0005*t*t },
+			sizeMult: 0.001,
 		},
 	];
 
@@ -149,13 +150,16 @@
 	var sleeping = false;
 	function loadNextFunction() {
 		activeFunction = {};
-		activeFunction = constantDefaults; // FIXME: This is a reference, not a copy. newFunc key writes will modify constantDefaults as well.
 		newFunc = globals.getNextFunction();
-		//console.log(newFunc);
+
+		// Shallow copy, then overwrite
+		for (key in constantDefaults) {
+			activeFunction[key] = constantDefaults[key];
+		}
 		for (key in newFunc) {
-			//console.log("processing key " + key);
 			activeFunction[key] = newFunc[key];
 		}
+
 		activeFunction.previousPointX = activeFunction.startX;
 		activeFunction.previousPointY = activeFunction.startY;
 		activeFunction.currentPointX = activeFunction.startX;
@@ -163,10 +167,10 @@
 		activeFunction.t = activeFunction.tStart;
 		functionNum += 1;
 		lineNum = 0;
-		lineColorFunction = activeFunction.getLineColorFunction();
-		lineColor = lineColorFunction(functionNum, lineNum);
-		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction());
+		lineColor = activeFunction.getLineColor(functionNum, lineNum);
+		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction()); // old
 	}
+
 	//console.log(window);
 	// TODO functionFinish should use constants, etc
 	function functionFinish() {
@@ -215,7 +219,9 @@
 	}
 	
 	function draw() {
-		
+		if (lineNum < 2)
+			return 0;		
+	
 		// Draw line from previous point to current.
 		ctx.beginPath();
 		ctx.strokeStyle = lineColor;
