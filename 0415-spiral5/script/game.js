@@ -13,9 +13,22 @@
 
 // EXTEND canvas size settings affect HTML/CSS too, have all of these adjustable and then click ok button to start anims with those settings (walker index.html style but no reload), use LocalStorage for remembering values, export url to allow others to view the same thing, make it possible for individual func to offer to overwrite values in const if prettier, allow randomization of all constant values on new func load (intensity/frequency determined by user), consider UX (descriptions), would it be easy to calculate max-t based on canvas size and size-mult??, does whitening-leaves-shadow-trails of Arora happen in other browsers? caused by canvas size/html size pixel antialias smoothening mismatch?
 
-// TODO rename gs, move current constants to new array of "func define" objects, add function to generate additional funcs randomized into the array, move gs initialpoint to func defining object, add function to handle func switch and gs initializing (using params from const), 
+// DONE rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
-// TODO rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
+	var colorFunctions = {
+                alwaysBlack:
+                        function(functionNum, lineNum) { return "#000"; },
+                alwaysWhite:
+                        function(functionNum, lineNum) { return "#FFF"; },
+                randomColorFunction:
+                        function(functionNum, lineNum) {
+                                return globals.Color(Math.random(),
+                                                Math.random(),
+                                                Math.random());
+                        },
+                // randomSaturatedColor
+                // others?
+        };
 
 
 	// Adjustable by user prior to generating functions.
@@ -27,10 +40,10 @@
 		startY: 205,
 		
 		tStart: 0, // supposed to be overwritten by func
-		tEnd: -1,  // supposed to be overwritten by func
+		frames: 800, // length to play animations for
 		sizeMult: 0.015,
 		
-                endPauseLength: 500, // milliseconds, pause before mode switch
+                endPauseLength: 1500, // milliseconds, pause before mode switch
                 invertOnFinish: false, // revert function outside-in on end
                 fillOnFinish: false, // fill function with white inside-out
                 finishFillStyle: "", // "circle", "func-trace", "next-func"
@@ -38,83 +51,86 @@
                 clearOnFinish: true, // clear screen after invert/clear/finish
 
                 onlyBlackWhite: false, // override all color settings
-                lineColorLength: 0, // number of lines to draw per color, 0: one line color per function
-                getLineColorFunction: // return func for getting next color
-                        function() { 
+                lineColorLength: 40, // number of lines to draw per color, 0: one line color per function
+                getLineColor: // return func for getting next color
+                        (function() {
+				// Can keep state here if needed
                                 return colorFunctions.randomColorFunction;
-                        },
+                        })(),
 
 		functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
         	functionY: function(t) { return t * activeFunction.sizeMult * Math.cos(t * Math.PI / 180); },
 	};
 
-	var colorFunctions = {
-                alwaysBlack:
-                        function(functionNum, lineNum) { return "#000"; },
-                alwaysWhite:
-                        function(functionNum, lineNum) { return "#FFF"; },
-                randomColorFunction:
-                        function(functionNum, lineNum) {
-                                return "rgb(" + Math.random() + "," +
-                                                Math.random() + "," +
-                                                Math.random() + ")";
-                        },
-                // randomSaturatedColor
-                // others?
-        };
-
 	var functionList = [
 		{
 			tStart: 0,
 			tStep: 123,
-			tEnd: 200000,
+			tEnd: 140000,
 			sizeMult: 0.01
 		},
                 {
                         tStart: 0,
                         tStep: 162.3,
                         tEnd: 200000,
+			frames: 500,
                         sizeMult: 0.034
                 },
                 {
                         tStart: 0,
                         tStep: 164,
                         tEnd: 200000,
-                        sizeMult: 0.001
+			frames:	500,
+                        sizeMult: 0.005
                 },
                 {
                         tStart: 0,
                         tStep: 91,
                         tEnd: 200000,
-                        sizeMult: 0.002
+			frames: 500,
+                        sizeMult: 0.005
                 },
                 {
                         tStart: 0,
                         tStep: 87.8,
                         tEnd: 150000,
+			frames: 500,
                         sizeMult: 0.01
                 },
                 {
                         tStart: 0,
                         tStep: 61,
-                        tEnd: 100000,
+			tEnd: 60000,
+			frames: 500,
                         sizeMult: 0.015
                 },
                 {
                         tStart: 10000,
                         tStep: 181.5,
                         tEnd: 250000,
-                        sizeMult: 0.005
+			frames: 500,
+                        sizemult: 0.005
                 },
 		{
-			tStart: 15000,
+			tStart: 2000,
 			tStep: 185,
 			tEnd: 250000,
+			frames: 500,
 			sizeMult: 0.01
+		},
+		{
+			tStart: -400,
+			tStep: 1,
+			tEnd: 400,
+			functionX: function(t) { return t },
+			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.0000048*(t*t*t) + 0.0005*t*t },
+			sizeMult: 0.001,
 		},
 	];
 
 	var globals = {
+		Color: net.brehaut.Color,
+
 		generatedFunctions: 0, // number of random-variable functions
 		getNextFunction:
 			function() { return functionList[ 
@@ -127,28 +143,44 @@
 	};
 
 	var activeFunction = {};
-	
+	var functionNum = 0;
+	var lineNum = 0;
+	var lineColor;
+	var sleeping = false;
 	function loadNextFunction() {
-		activeFunction = constantDefaults;
-		newFunc = globals.getNextFunction(); // FIXME undefined value
-		console.log(newFunc);
+		activeFunction = {};
+		newFunc = globals.getNextFunction();
+
+		// Shallow copy, then overwrite
+		for (key in constantDefaults) {
+			activeFunction[key] = constantDefaults[key];
+		}
 		for (key in newFunc) {
-			console.log("processing key " + key);
 			activeFunction[key] = newFunc[key];
 		}
+
 		activeFunction.previousPointX = activeFunction.startX;
 		activeFunction.previousPointY = activeFunction.startY;
 		activeFunction.currentPointX = activeFunction.startX;
 		activeFunction.currentPointY = activeFunction.startY;
 		activeFunction.t = activeFunction.tStart;
+		functionNum += 1;
+		lineNum = 0;
+		lineColor = activeFunction.getLineColor(functionNum, lineNum);
+		//console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction()); // old
 	}
 
+	//console.log(window);
 	// TODO functionFinish should use constants, etc
 	function functionFinish() {
 		// invertColor();
-		loadNextFunction();
-		ctx.closePath();
-                clearCanvas();
+		sleeping = true;
+		window.setTimeout(function() {
+			sleeping = false;
+			loadNextFunction();
+	                ctx.closePath();
+	                clearCanvas();
+		}, activeFunction.endPauseLength);
 	}
 
 	var canvas = document.getElementById("gameCanvas");
@@ -159,11 +191,22 @@
 	function update() {
 		// TODO handle negative tStep, i.e. decreasing t-value
 		// TODO also handle undefined tStep
-		if (activeFunction.t > activeFunction.tEnd) {
+		if (activeFunction.frames < lineNum) {
 			functionFinish();
 			return 0;
 		}
-		
+
+		if (sleeping) {
+			return 0;
+		}		
+
+		// Figure out if we need to change stroke color.
+		lineNum += 1;
+		if (activeFunction.lineColorLength > 0 &&
+		lineNum % activeFunction.lineColorLength === 0) {
+			lineColor = activeFunction.getLineColor(functionNum, lineNum);
+		}
+
 		// Calculate position of next point.
 		activeFunction.t += activeFunction.tStep;
 		activeFunction.previousPointX = activeFunction.currentPointX;
@@ -175,9 +218,12 @@
 	}
 	
 	function draw() {
-		
+		//if (lineNum < 2)
+		//	return 0;		
+	
 		// Draw line from previous point to current.
 		ctx.beginPath();
+		ctx.strokeStyle = lineColor;
 		ctx.moveTo(activeFunction.previousPointX, 
 				activeFunction.previousPointY);
 		ctx.lineTo(activeFunction.currentPointX,
@@ -186,7 +232,7 @@
 	}
 	
 	function invertColor() {
-		var color = ctx.strokeStyle === "#000000" ? "#FFFFFF" : "#000000"
+		var color = ctx.strokeStyle !== "#FFFFFF" ? "#FFFFFF" : "#000000"
 		ctx.strokeStyle = color;
 		ctx.fillStyle = color;
 	}
@@ -201,9 +247,8 @@
 	        ctx.fillStyle = "#000000";
 	}
 	
-	clearCanvas();
-	loadNextFunction();	
-	console.log(activeFunction);
+	functionFinish();
+	//console.log(activeFunction);
 	window.setInterval(function() {
 		update();
 	}, 1000 / constantDefaults.fps);
