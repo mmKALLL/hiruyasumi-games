@@ -43,10 +43,10 @@
 		startY: 205,
 
 		tStart: 0, // supposed to be overwritten by func
-		frames: 800, // length to play animations for
+		frames: 1200, // length to play animations for
 		sizeMult: 0.015,
 
-		endPauseLength: 1500, // milliseconds, pause before mode switch
+		endPauseLength: 2500, // milliseconds, pause before mode switch
 		invertOnFinish: false, // revert function outside-in on end
 		fillOnFinish: false, // fill function with white inside-out
 		finishFillStyle: "", // "circle", "func-trace", "next-func"
@@ -76,50 +76,45 @@
 			tStart: 0,
 			tStep: 162.3,
 			tEnd: 200000,
-			frames: 500,
 			sizeMult: 0.034
 		},
 		{
 			tStart: 0,
 			tStep: 164,
 			tEnd: 200000,
-			frames:	500,
 			sizeMult: 0.005
 		},
 		{
 			tStart: 0,
 			tStep: 91,
 			tEnd: 200000,
-			frames: 500,
-			sizeMult: 0.005
+			sizeMult: 0.005,
+			frames: 1300,
 		},
 		{
 			tStart: 0,
 			tStep: 87.8,
 			tEnd: 150000,
-			frames: 500,
 			sizeMult: 0.01
 		},
 		{
 			tStart: 0,
 			tStep: 61,
 			tEnd: 60000,
-			frames: 500,
 			sizeMult: 0.015
 		},
 		{
 			tStart: 10000,
 			tStep: 181.5,
 			tEnd: 250000,
-			frames: 500,
-			sizemult: 0.005
+			sizemult: 0.005,
+			frames: 1200,
 		},
 		{
 			tStart: 2000,
 			tStep: 185,
 			tEnd: 250000,
-			frames: 500,
-			sizeMult: 0.01
+			sizeMult: 0.01,
 		},
 		{
 			tStart: -400,
@@ -128,6 +123,7 @@
 			functionX: function(t) { return t },
 			functionY: function(t) { return 0.1*t*Math.sin(t) + 0.0000048*(t*t*t) + 0.0005*t*t },
 			sizeMult: 0.001,
+			frames: 800,
 		},
 	];
 
