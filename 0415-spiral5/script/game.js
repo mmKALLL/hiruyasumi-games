@@ -164,8 +164,8 @@
       tStep: step,
       tEnd: 1000000,
       sizeMult: size,
-      frames: Math.floor(200 + 700*(0.013 / size) + 
-          (Math.abs(180 - step) < 35 ? 400 : 0)),
+      frames: Math.floor(320 + 1000*(0.008 / size) + 
+          (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 280 : 0)),
       lineColorLength: Math.floor(Math.random() * 100),
     };
   }
