@@ -48,7 +48,7 @@
     frames: 1400, // length to play animations for
     sizeMult: 0.015,
 
-    endPauseLength: 1500, // milliseconds, pause before mode switch
+    endPauseLength: 900, // milliseconds, pause before mode switch
     invertOnFinish: false, // revert function outside-in on end
     fillOnFinish: false, // fill function with white inside-out
     finishFillStyle: "", // "circle", "func-trace", "next-func"
@@ -157,7 +157,7 @@
     // TODO: Calculate size to var and compute tEnd/frames based on it.
     var size = 0.005 + Math.random()*0.018;
     var start = Math.random() < 0.9 ? 0 : 10 + Math.random()*10000;
-    var step = Math.floor((360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20);
+    var step = (360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20;
 
     return {
       tStart: start,
@@ -217,14 +217,14 @@
 
   // loop
   function update() {
+    if (sleeping) {
+      return 0;
+    }
+
     // TODO handle negative tStep, i.e. decreasing t-value
     // TODO also handle undefined tStep
     if (lineNum > activeFunction.frames) {
       functionFinish();
-      return 0;
-    }
-
-    if (sleeping) {
       return 0;
     }
 
