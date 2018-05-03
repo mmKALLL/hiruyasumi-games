@@ -148,7 +148,7 @@
     // TODO: Calculate size to var and compute tEnd/frames based on it.
     return {
       tStart: Math.random() < 0.9 ? 0 : 10 + Math.random()*10000,
-      tStep: Math.floor((360 / Math.floor(Math.random()*7 + 1)) + Math.random()*40 - 20),
+      tStep: Math.floor((360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20),
       tEnd: 1000000,
       sizeMult: 0.005 + Math.random()*0.02,
       lineColorLength: Math.floor(Math.random() * 100),
