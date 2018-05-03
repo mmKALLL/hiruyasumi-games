@@ -45,10 +45,10 @@
     startY: 205,
 
     tStart: 0, // supposed to be overwritten by func
-    frames: 1400, // length to play animations for
+    frames: 1300, // length to play animations for
     sizeMult: 0.015,
 
-    endPauseLength: 900, // milliseconds, pause before mode switch
+    endPauseLength: 1600, // milliseconds, pause before mode switch
     invertOnFinish: false, // revert function outside-in on end
     fillOnFinish: false, // fill function with white inside-out
     finishFillStyle: "", // "circle", "func-trace", "next-func"
