@@ -132,10 +132,10 @@
   var globals = {
     Color: net.brehaut.Color,
 
-    generateFunctions: true, // use randomly-generated functions
+    generateRandomFunctions: true, // use randomly-generated functions
     getNextFunction:
         function() {
-          if (globals.generateFunctions) {
+          if (globals.generateRandomFunctions) {
             return {
                 tStart: Math.random() < 0.4 ? 0 : Math.random()*10000,
                 tStep: (360 / Math.floor(Math.random()*8)) + Math.random()*40 - 20,
