@@ -38,7 +38,7 @@
 
   // Adjustable by user prior to generating functions.
   var constantDefaults = {
-    fps: 40,
+    fps: 100,
     canvasX: 800, // TODO get size from CSS definition
     canvasY: 410,
     startX: 400,
@@ -157,7 +157,7 @@
     // TODO: Calculate size to var and compute tEnd/frames based on it.
     var size = 0.005 + Math.random()*0.018;
     var start = Math.random() < 0.9 ? 0 : 10 + Math.random()*10000;
-    var step = (360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20;
+    var step = (360 / Math.floor(Math.random()*8 + 2)) + Math.random()*40 - 20;
 
     return {
       tStart: start,
