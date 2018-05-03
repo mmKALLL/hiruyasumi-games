@@ -43,10 +43,10 @@
     startY: 205,
 
     tStart: 0, // supposed to be overwritten by func
-    frames: 1200, // length to play animations for
+    frames: 1000, // length to play animations for
     sizeMult: 0.015,
 
-    endPauseLength: 2500, // milliseconds, pause before mode switch
+    endPauseLength: 1500, // milliseconds, pause before mode switch
     invertOnFinish: false, // revert function outside-in on end
     fillOnFinish: false, // fill function with white inside-out
     finishFillStyle: "", // "circle", "func-trace", "next-func"
@@ -130,12 +130,19 @@
   var globals = {
     Color: net.brehaut.Color,
 
-    generatedFunctions: 0, // number of random-variable functions
+    generateFunctions: true, // use randomly-generated functions
     getNextFunction:
-    function() { return functionList[
-      Math.floor(
-        Math.random() * functionList.length)
-      ];
+        function() {
+          if (globals.generateFunctions) {
+            return {
+                tStart: Math.random() < 0.4 ? 0 : Math.random()*10000,
+                tStep: 110,
+                tEnd: 25000,
+                sizeMult: 0.007,
+            };
+          } else {
+            return functionList[ Math.floor(Math.random() * functionList.length) ];
+          }
     },
     ignoreOverrides: false, // ignore settings defined by func
     canvasColor: "#FFF", // color used for clearing canvas
@@ -222,7 +229,8 @@
 
     // Draw line from previous point to current.
     ctx.beginPath();
-    ctx.strokeStyle = lineColor;
+    ctx.strokeStyle = lineColor.toString();
+    console.log(lineColor);
     ctx.moveTo(activeFunction.previousPointX,
         activeFunction.previousPointY);
     ctx.lineTo(activeFunction.currentPointX,
