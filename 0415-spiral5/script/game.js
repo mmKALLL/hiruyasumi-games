@@ -145,6 +145,7 @@
   };
 
   function getRandomFunction() {
+    // TODO: Calculate size to var and compute tEnd/frames based on it.
     return {
       tStart: Math.random() < 0.9 ? 0 : 10 + Math.random()*10000,
       tStep: Math.floor((360 / Math.floor(Math.random()*7 + 1)) + Math.random()*40 - 20),
