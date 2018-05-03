@@ -38,7 +38,7 @@
 
   // Adjustable by user prior to generating functions.
   var constantDefaults = {
-    fps: 100,
+    fps: 40,
     canvasX: 800, // TODO get size from CSS definition
     canvasY: 410,
     startX: 400,
@@ -162,7 +162,7 @@
     return {
       tStart: start,
       tStep: step,
-      tEnd: 1000000,
+      tEnd: 440000,
       sizeMult: size,
       frames: Math.floor(320 + 1000*(0.008 / size) + 
           (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 280 : 0)),
