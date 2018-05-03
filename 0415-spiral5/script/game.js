@@ -13,6 +13,8 @@
 
   // EXTEND canvas size settings affect HTML/CSS too, have all of these adjustable and then click ok button to start anims with those settings (walker index.html style but no reload), use LocalStorage for remembering values, export url to allow others to view the same thing, make it possible for individual func to offer to overwrite values in const if prettier, allow randomization of all constant values on new func load (intensity/frequency determined by user), consider UX (descriptions), would it be easy to calculate max-t based on canvas size and size-mult??, does whitening-leaves-shadow-trails of Arora happen in other browsers? caused by canvas size/html size pixel antialias smoothening mismatch?
 
+ // TODO add buttons for new func, save picture, change globals, etc.
+
   // DONE rethink all variable names and structure for future-proofing, add func objects into pre-determined array (load from file?), add/remove code comments, have constants be universal options, i.e. true/false generate func objects on init (and const for amount), replay func on finish, alternate colors on finish or clear screen, have random (high saturation) color used (and changed between how many steps), fps multiplier, custom length pause at end before erase/revert, whether cleaning is middle-out or out-middle (rymdreglage style)
 
   var colorFunctions = {
@@ -113,6 +115,13 @@
       frames: 1200,
     },
     {
+      tStart: 0,
+      tStep: 126,
+      tEnd: 250000,
+      sizeMult: 0.0064,
+      frames: 1400,
+    },
+    {
       tStart: 2000,
       tStep: 185,
       tEnd: 250000,
@@ -146,11 +155,17 @@
 
   function getRandomFunction() {
     // TODO: Calculate size to var and compute tEnd/frames based on it.
+    var size = 0.005 + Math.random()*0.018;
+    var start = Math.random() < 0.9 ? 0 : 10 + Math.random()*10000;
+    var step = Math.floor((360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20);
+
     return {
-      tStart: Math.random() < 0.9 ? 0 : 10 + Math.random()*10000,
-      tStep: Math.floor((360 / Math.floor(Math.random()*6 + 2)) + Math.random()*40 - 20),
+      tStart: start,
+      tStep: step,
       tEnd: 1000000,
-      sizeMult: 0.005 + Math.random()*0.02,
+      sizeMult: size,
+      frames: Math.floor(200 + 700*(0.013 / size) + 
+          (Math.abs(180 - step) < 35 ? 400 : 0)),
       lineColorLength: Math.floor(Math.random() * 100),
     };
   }
