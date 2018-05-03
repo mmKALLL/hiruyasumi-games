@@ -137,9 +137,9 @@
         function() {
           if (globals.generateRandomFunctions) {
             return {
-                tStart: Math.random() < 0.4 ? 0 : Math.random()*10000,
+                tStart: Math.random() < 0.9 ? 0 : Math.random()*10000,
                 tStep: (360 / Math.floor(Math.random()*8)) + Math.random()*40 - 20,
-                tEnd: 25000 + Math.random()*280000,
+                tEnd: 1000000,
                 sizeMult: 0.001 + Math.random()*Math.random()*0.07,
                 lineColorLength: Math.floor(Math.random() * 100),
             };
@@ -185,10 +185,10 @@
     // invertColor();
     sleeping = true;
     window.setTimeout(function() {
-      sleeping = false;
       loadNextFunction();
       ctx.closePath();
       clearCanvas();
+      sleeping = false;
     }, activeFunction.endPauseLength);
   }
 
@@ -233,7 +233,6 @@
     // Draw line from previous point to current.
     ctx.beginPath();
     ctx.strokeStyle = lineColor.toString();
-    console.log(lineColor);
     ctx.moveTo(activeFunction.previousPointX,
         activeFunction.previousPointY);
     ctx.lineTo(activeFunction.currentPointX,
