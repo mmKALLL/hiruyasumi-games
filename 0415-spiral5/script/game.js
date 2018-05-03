@@ -131,12 +131,11 @@
 
   var globals = {
     Color: net.brehaut.Color,
-
     generateRandomFunctions: true, // use randomly-generated functions
     getNextFunction:
         function() {
           if (globals.generateRandomFunctions) {
-            generateRandomFunction();
+            return getRandomFunction();
           } else {
             return functionList[ Math.floor(Math.random() * functionList.length) ];
           }
@@ -145,12 +144,12 @@
     canvasColor: "#FFF", // color used for clearing canvas
   };
 
-  function generateRandomFunction() {
+  function getRandomFunction() {
     return {
-      tStart: Math.random() < 0.9 ? 0 : Math.random()*10000,
-      tStep: (360 / Math.floor(Math.random()*8 + 1)) + Math.random()*40 - 20,
+      tStart: Math.random() < 0.9 ? 0 : 10 + Math.random()*10000,
+      tStep: Math.floor((360 / Math.floor(Math.random()*7 + 1)) + Math.random()*40 - 20),
       tEnd: 1000000,
-      sizeMult: 0.001 + Math.random()*Math.random()*0.07,
+      sizeMult: 0.005 + Math.random()*0.02,
       lineColorLength: Math.floor(Math.random() * 100),
     };
   }
