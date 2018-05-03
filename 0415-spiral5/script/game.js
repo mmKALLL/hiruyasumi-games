@@ -43,7 +43,7 @@
     startY: 205,
 
     tStart: 0, // supposed to be overwritten by func
-    frames: 1000, // length to play animations for
+    frames: 1400, // length to play animations for
     sizeMult: 0.015,
 
     endPauseLength: 1500, // milliseconds, pause before mode switch
@@ -70,13 +70,15 @@
       tStart: 0,
       tStep: 123,
       tEnd: 140000,
-      sizeMult: 0.01
+      sizeMult: 0.01,
+      frames: 1000
     },
     {
       tStart: 0,
       tStep: 162.3,
       tEnd: 200000,
-      sizeMult: 0.034
+      sizeMult: 0.034,
+      frames: 750
     },
     {
       tStart: 0,
@@ -89,7 +91,7 @@
       tStep: 91,
       tEnd: 200000,
       sizeMult: 0.005,
-      frames: 1300,
+      frames: 1600,
     },
     {
       tStart: 0,
@@ -136,9 +138,10 @@
           if (globals.generateFunctions) {
             return {
                 tStart: Math.random() < 0.4 ? 0 : Math.random()*10000,
-                tStep: 110,
-                tEnd: 25000,
-                sizeMult: 0.007,
+                tStep: (360 / Math.floor(Math.random()*8)) + Math.random()*40 - 20,
+                tEnd: 25000 + Math.random()*280000,
+                sizeMult: 0.001 + Math.random()*Math.random()*0.07,
+                lineColorLength: Math.floor(Math.random() * 100),
             };
           } else {
             return functionList[ Math.floor(Math.random() * functionList.length) ];
@@ -173,7 +176,7 @@
     functionNum += 1;
     lineNum = 0;
     lineColor = activeFunction.getLineColor(functionNum, lineNum);
-    //console.log(functionNum, lineNum, lineColor, lineColorFunction, lineColorFunction()); // old
+    console.log(activeFunction);
   }
 
   //console.log(window);
