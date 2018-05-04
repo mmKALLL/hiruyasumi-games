@@ -3,7 +3,7 @@
 Small games made for the fun of making things. The time limit for developing each game is 55 minutes, with 5 minutes for repository cleanup. Only non-functional changes are allowed post-development.
 
 0415-spiral got a lot of minor updates over the course of three days' worth of public transport, though. Check it out here:<br>
-<a href="https://mmkalll.github.io/hiruyasumi-games/0415-spiral5/index-miniscreen.html">https://mmkalll.github.io/hiruyasumi-games/0415-spiral5/index-miniscreen.html</a>
+<a href="https://mmkalll.github.io/hiruyasumi-games/0415-spiral5/index.html">https://mmkalll.github.io/hiruyasumi-games/0415-spiral5/index.html</a>
 
 Honorable mention to 1026-colorwaves:<br>
 <a href="https://mmkalll.github.io/hiruyasumi-games/1026-colorwaves3/index.html">https://mmkalll.github.io/hiruyasumi-games/1026-colorwaves3/index.html</a>
