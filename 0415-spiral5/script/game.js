@@ -71,7 +71,7 @@
     getLineColor: // return func for getting next color
         (function() {
           // Can keep state here if needed
-          return colorFunctions.randomColorFunction;
+          return colorFunctions.randomColor;
         })(),
 
     functionX: function(t) { return t * activeFunction.sizeMult * Math.sin(t * Math.PI / 180); },
