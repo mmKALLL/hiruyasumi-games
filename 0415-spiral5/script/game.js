@@ -155,6 +155,14 @@
       frames: 2000,
       sizeMult: 0.018,
       lineColorLength: 8,
+    },
+    {
+      tStart: 0,
+      tStep: 72.324,
+      tEnd: 440000,
+      frames: 1300,
+      sizeMult: 0.004548927031272584,
+      lineColorLength: 62,
     }
   ];
 
@@ -175,7 +183,7 @@
 
   function getRandomFunction() {
     // TODO: Calculate size to var and compute tEnd/frames based on it.
-    var size = 0.004 + Math.random()*0.014;
+    var size = 0.002 + Math.random()*0.016;
     var start = Math.random() < 0.98 ? 0 : 10 + Math.random()*20000;
     var step = (360 / Math.floor(Math.random()*8 + 2)) + Math.random()*40 - 20;
 
@@ -184,9 +192,9 @@
       tStep: step,
       tEnd: 440000,
       sizeMult: size,
-      frames: Math.floor(280 + 1000*(0.0076 / size) +
+      frames: Math.floor(300 + 1000*(0.0075 / size) +
           (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 220 : 0)),
-      lineColorLength: Math.floor(Math.random() * 100),
+      lineColorLength: Math.floor(Math.random() * 110),
     };
   }
 
