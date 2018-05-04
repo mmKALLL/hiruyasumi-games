@@ -36,9 +36,9 @@
         function(functionNum, lineNum) {
           return globals.Color(
               {
-                h: Math.random(),
-                s: (0.7 + Math.random() * 0.3),
-                v: (0.3 + Math.random() * 0.7)
+                hue: Math.random()*360,
+                saturation: (0.7 + Math.random() * 0.3)*360,
+                value: (0.3 + Math.random() * 0.7)*360
               }
           ).toString
         },
@@ -147,6 +147,15 @@
       sizeMult: 0.001,
       frames: 800,
     },
+    {
+      tStart: 3000,
+      tStep: 180.14,
+      tEnd: 1000000,
+      fps: 130,
+      frames: 2000,
+      sizeMult: 0.008,
+      lineColorLength: 2,
+    }
   ];
 
   var globals = {
@@ -166,7 +175,7 @@
 
   function getRandomFunction() {
     // TODO: Calculate size to var and compute tEnd/frames based on it.
-    var size = 0.005 + Math.random()*0.018;
+    var size = 0.004 + Math.random()*0.017;
     var start = Math.random() < 0.98 ? 0 : 10 + Math.random()*20000;
     var step = (360 / Math.floor(Math.random()*8 + 2)) + Math.random()*40 - 20;
 
