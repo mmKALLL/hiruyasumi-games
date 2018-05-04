@@ -149,12 +149,12 @@
     },
     {
       tStart: 3000,
-      tStep: 180.14,
+      tStep: 180.18,
       tEnd: 1000000,
-      fps: 130,
+      fps: 100,
       frames: 2000,
-      sizeMult: 0.008,
-      lineColorLength: 2,
+      sizeMult: 0.018,
+      lineColorLength: 8,
     }
   ];
 
