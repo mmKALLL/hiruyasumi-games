@@ -40,7 +40,7 @@
                 saturation: (0.7 + Math.random() * 0.3)*360,
                 value: (0.3 + Math.random() * 0.7)*360
               }
-          ).toString
+          ).toString();
         },
     // randomSaturatedColor
     // others?
@@ -175,7 +175,7 @@
 
   function getRandomFunction() {
     // TODO: Calculate size to var and compute tEnd/frames based on it.
-    var size = 0.004 + Math.random()*0.017;
+    var size = 0.004 + Math.random()*0.014;
     var start = Math.random() < 0.98 ? 0 : 10 + Math.random()*20000;
     var step = (360 / Math.floor(Math.random()*8 + 2)) + Math.random()*40 - 20;
 
@@ -184,7 +184,7 @@
       tStep: step,
       tEnd: 440000,
       sizeMult: size,
-      frames: Math.floor(280 + 1000*(0.0077 / size) + 
+      frames: Math.floor(280 + 1000*(0.0076 / size) +
           (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 220 : 0)),
       lineColorLength: Math.floor(Math.random() * 100),
     };
