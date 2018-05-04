@@ -22,14 +22,25 @@
     function(functionNum, lineNum) { return "#000"; },
     alwaysWhite:
     function(functionNum, lineNum) { return "#FFF"; },
-    randomColorFunction:
+    randomColor:
         function(functionNum, lineNum) {
           return globals.Color(
               {
                 red: Math.random(),
                 green: Math.random(),
                 blue: Math.random()
-              }).toString();
+              }
+          ).toString();
+        },
+    randomSaturated:
+        function(functionNum, lineNum) {
+          return globals.Color(
+              {
+                hue: Math.random(),
+                saturation: (0.7 + Math.random() * 0.3),
+                value: (0.3 + Math.random() * 0.7)
+              }
+          ).toString
         },
     // randomSaturatedColor
     // others?
@@ -38,7 +49,7 @@
 
   // Adjustable by user prior to generating functions.
   var constantDefaults = {
-    fps: 40,
+    fps: 80,
     canvasX: 800, // TODO get size from CSS definition
     canvasY: 410,
     startX: 400,
@@ -165,7 +176,7 @@
       tEnd: 440000,
       sizeMult: size,
       frames: Math.floor(320 + 1000*(0.008 / size) + 
-          (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 280 : 0)),
+          (Math.abs(180 - step) < 35 || Math.abs(step) < 42 ? 220 : 0)),
       lineColorLength: Math.floor(Math.random() * 100),
     };
   }
